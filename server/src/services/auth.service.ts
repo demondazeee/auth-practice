@@ -77,6 +77,13 @@ export const loginUser = async (userBody: UserBody, res: Response) => {
     }
 }
 
+export const logoutUser = (res: Response) =>{
+    res.cookie('rt', '', {
+        expires: new Date(0),
+        httpOnly: true
+    })
+}
+
 export const refresh_token = async (req: Request, res: Response) => {
     try {
         const oldToken = req.cookies['rt'];
@@ -101,13 +108,13 @@ export const refresh_token = async (req: Request, res: Response) => {
 
         const token = jwt_token(user.id, res)
 
-        return {
+        return res.status(200).send({
             ...user,
             token
-        }
+        })
     }catch(e: any){
-        return {
+        return res.status(404).send({
             message: e.message
-        }
+        })
     }
 }
