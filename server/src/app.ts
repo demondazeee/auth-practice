@@ -18,12 +18,6 @@ app.use(express.json())
 app.use(cookieParser())
 app.use('/', authRouter)
 
-app.get('/test', (req, res)=> {
-  res.send({
-    message: 'haha'
-  })
-})
-
 app.listen(port, () => {
   console.log(`Server Started at port: ${port}`);
 });
