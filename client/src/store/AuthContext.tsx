@@ -14,7 +14,8 @@ export const authContext=  createContext({
     isLoading: false,
     signIn: async (username: string, password: string) => {},
     refreshToken: async () => {},
-    registerUser: async(username: string, password: string)=> {}
+    registerUser: async(username: string, password: string)=> {},
+    logoutUser: async () => {}
 })
 
 const AuthContext = ({children}:{children: ReactNode} ) => {
@@ -23,17 +24,16 @@ const AuthContext = ({children}:{children: ReactNode} ) => {
 
     useEffect(() =>{
         auth.refreshToken()
-        const timeout = setTimeout(()=>{
-            auth.refreshToken()
-            console.log('execute')
-        }, 3000)
-        
-
-        return () => {
-            console.log('cleared')
-            clearTimeout(timeout)
+        if(auth.isLoggedIn) {
+            const time = setInterval(()=>{
+                auth.refreshToken()
+            }, 5000)
+            
+            return () =>{
+                clearInterval(time)
+            }
         }
-    },[])
+    },[auth.isLoggedIn])
 
 
     return (

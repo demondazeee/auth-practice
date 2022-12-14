@@ -71,7 +71,28 @@ export const useAuthProvider = () =>{
             setIsLoading(false)
         } else {
             const data = await res.json()
-            console.log(data.error)
+            console.log(data)
+        }
+    }
+
+    const logoutUser = async () =>{
+        setIsLoading(true)
+        const res = await fetch(`${url}/logout`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: "include"
+        })
+
+        if (res.ok){
+            const data = await res.json()
+            setUser({})
+            setIsLoggedIn(false)
+            setIsLoading(false)
+        } else {
+            const data = await res.json()
+            console.log(data)
         }
     }
 
@@ -81,6 +102,7 @@ export const useAuthProvider = () =>{
         isLoggedIn,
         signIn,
         refreshToken,
-        registerUser
+        registerUser,
+        logoutUser
     }
 }
