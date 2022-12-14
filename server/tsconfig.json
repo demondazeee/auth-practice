@@ -1,4 +1,5 @@
 {
+  "typeRoots": ["./node_modules/@types", "./src/types"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
